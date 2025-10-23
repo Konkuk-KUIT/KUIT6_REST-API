@@ -3,8 +3,13 @@ package com.example.kuit_9week_mission.domain.club.service;
 import com.example.kuit_9week_mission.domain.club.repository.ClubMemberRepository;
 import com.example.kuit_9week_mission.domain.club.repository.ClubRepository;
 import com.example.kuit_9week_mission.domain.student.repository.StudentRepository;
+import com.example.kuit_9week_mission.global.common.exception.CustomException;
+import com.example.kuit_9week_mission.global.common.response.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +20,22 @@ public class ClubMemberService {
     private final ClubMemberRepository clubMemberRepository;
 
     // TODO 5: 현재 로그인한 학생의 동아리 가입 기능 구현(토큰 필요) - POST
+    @Transactional
+    public void joinClub(Long studentId, Long clubId) {
+        // 학생 존재 검증
+        studentRepository.findById(studentId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND, new IllegalArgumentException("해당 학생이 존재하지 않습니다.")));
+
+        clubRepository.findById(clubId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND, new IllegalArgumentException("해당 동아리가 존재하지 않습니다.")));
+
+        // 이미 가입되어있으면 아무런 동작도 하지 않고 리턴
+        if (clubMemberRepository.existsByStudentIdAndClubId(studentId, clubId)) {
+            return;
+        }
+
+        clubMemberRepository.save(studentId, clubId, LocalDate.now());
+    }
 
     // TODO 6: 현재 로그인한 학생이 속해있는 동아리 목록 조회(토큰 필요) - (학생의 이름 & 동아리 이름 모두 반환 => JOIN 잘 활용하기) - GET
     /*
