@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -31,7 +32,19 @@ public class ClubRepository {
              ORDER BY club_id DESC
              LIMIT ?
             """;
+
         return jdbc.query(sql, MAPPER, lastId, size + 1);
+    }
+
+    public Optional<Club> findById(Long clubId) {
+        String sql = "SELECT club_id, name, description FROM Clubs WHERE club_id = ?";
+
+        return jdbc.query(sql, MAPPER, clubId).stream().findFirst();
+    }
+
+    public void update(Long clubId, String name, String description) {
+        jdbc.update("UPDATE Clubs SET name = ?, description = ? WHERE club_id = ?",
+                name, description, clubId);
     }
 
 }
