@@ -11,6 +11,14 @@ public class ClubService {
     private final ClubRepository clubRepository;
 
     // TODO 1: 전체 동아리 목록 조회 기능 구현(토큰 불필요) - GET (무한 스크롤 - 각 페이지당 5개의 데이터를 보여줄 것)
+    /**
+     * 응답 DTO 구조는 아래와 같은 형태를 따를 것
+     * {
+     *     data: [],
+     *     lastId: 100,
+     *     hasNext: true
+     * }
+     */
 
     // TODO 2: 동아리 정보 수정 기능 구현(토큰 불필요) - PUT
 
