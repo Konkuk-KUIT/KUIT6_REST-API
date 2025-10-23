@@ -1,5 +1,6 @@
 package com.example.kuit_9week_mission.domain.student.controller;
 
+import com.example.kuit_9week_mission.domain.club.dto.response.MyClubsResponse;
 import com.example.kuit_9week_mission.domain.club.service.ClubMemberService;
 import com.example.kuit_9week_mission.domain.student.dto.request.UpdateStudentNameRequest;
 import com.example.kuit_9week_mission.domain.student.dto.response.StudentInfoResponse;
@@ -33,6 +34,11 @@ public class StudentController {
         studentService.updateStudentInfo(studentId, request);
 
         return ApiResponse.ok(null);
+    }
+
+    @GetMapping("/me/clubs")
+    public ApiResponse<MyClubsResponse> getMyClubs(@StudentId Long studentId) {
+        return ApiResponse.ok(clubMemberService.getMyClubs(studentId));
     }
 
 

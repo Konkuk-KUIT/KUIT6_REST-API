@@ -1,5 +1,6 @@
 package com.example.kuit_9week_mission.domain.club.service;
 
+import com.example.kuit_9week_mission.domain.club.dto.response.MyClubsResponse;
 import com.example.kuit_9week_mission.domain.club.repository.ClubMemberRepository;
 import com.example.kuit_9week_mission.domain.club.repository.ClubRepository;
 import com.example.kuit_9week_mission.domain.student.repository.StudentRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -51,6 +53,17 @@ public class ClubMemberService {
      *   "timestamp": "2025-10-24T00:37:07.469931"
      * }
      */
+    public MyClubsResponse getMyClubs(Long studentId) {
+        // 학생 조회 및 검증
+        String studentName = studentRepository.findById(studentId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND, new IllegalArgumentException("해당 학생이 존재하지 않습니다.")))
+                .name();
+
+        // Club_Members 와 JOIN 하여 동아리 이름 목록 조회
+        List<String> clubNames = clubMemberRepository.findClubNamesByStudentId(studentId);
+
+        return MyClubsResponse.of(studentName, clubNames);
+    }
 
 
 
