@@ -35,8 +35,8 @@ VALUES ('동아리 1', '동아리 1 설명'),
        ('동아리 29', '동아리 29 설명'),
        ('동아리 30', '동아리 30 설명');
 
--- 가입 샘플(김상균: 1번 학생이 3,7,10 동아리 가입)
-INSERT INTO Student_Clubs (join_date, student_id, club_id)
+-- 가입 샘플(1번 학생이 3,7,10 동아리 가입)
+INSERT INTO Club_Members (join_date, student_id, club_id)
 VALUES ('2024-03-01', 1, 3),
        ('2024-03-02', 1, 7),
        ('2024-03-03', 1, 10);

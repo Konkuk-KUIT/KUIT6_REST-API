@@ -1,16 +1,18 @@
-package com.example.kuit_9week_mission.domain.student.service;
+package com.example.kuit_9week_mission.domain.club.service;
 
-import com.example.kuit_9week_mission.domain.student.repository.StudentClubRepository;
+import com.example.kuit_9week_mission.domain.club.repository.ClubMemberRepository;
+import com.example.kuit_9week_mission.domain.club.repository.ClubRepository;
 import com.example.kuit_9week_mission.domain.student.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class StudentClubService {
+public class ClubMemberService {
 
     private final StudentRepository studentRepository;
-    private final StudentClubRepository studentClubRepository;
+    private final ClubRepository clubRepository;
+    private final ClubMemberRepository clubMemberRepository;
 
     // TODO 5: 현재 로그인한 학생의 동아리 가입 기능 구현(토큰 필요) - POST
 

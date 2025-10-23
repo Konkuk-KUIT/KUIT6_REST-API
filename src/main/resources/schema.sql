@@ -1,5 +1,5 @@
 -- schema.sql
-DROP TABLE IF EXISTS Student_Clubs;
+DROP TABLE IF EXISTS Club_Members;
 DROP TABLE IF EXISTS Students;
 DROP TABLE IF EXISTS Clubs;
 
@@ -17,13 +17,13 @@ CREATE TABLE Clubs
     description VARCHAR(200)
 );
 
-CREATE TABLE Student_Clubs
+CREATE TABLE Club_Members
 (
-    student_club_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    join_date       DATE,
-    student_id      BIGINT NOT NULL,
-    club_id         BIGINT NOT NULL,
-    CONSTRAINT fk_sc_student FOREIGN KEY (student_id) REFERENCES Students (student_id),
-    CONSTRAINT fk_sc_club FOREIGN KEY (club_id) REFERENCES Clubs (club_id),
-    CONSTRAINT ux_student_club UNIQUE (student_id, club_id)
+    club_member_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    join_date     DATE,
+    student_id    BIGINT NOT NULL,
+    club_id       BIGINT NOT NULL,
+    CONSTRAINT fk_cm_student FOREIGN KEY (student_id) REFERENCES Students (student_id),
+    CONSTRAINT fk_cm_club FOREIGN KEY (club_id) REFERENCES Clubs (club_id),
+    CONSTRAINT ux_club_members UNIQUE (student_id, club_id)
 );
