@@ -10,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -26,7 +27,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CustomException.class)
     public ApiResponse<Void> handleCustomException(CustomException e) {
         ErrorCode errorCode = e.getErrorCode();
-        String customMessage = resolveMessage(e.getCause().getMessage(), errorCode.getMessage());
+
+        String customMessage = Optional.ofNullable(e.getCause())
+                .map(Throwable::getMessage)
+                .map(msg -> resolveMessage(msg, errorCode.getMessage()))
+                .orElse(errorCode.getMessage());
 
         log.error("[CustomException] {} - {}", errorCode.getStatusCode(), customMessage, e);
 
