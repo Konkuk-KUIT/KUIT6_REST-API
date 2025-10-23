@@ -32,4 +32,12 @@ public class ClubController {
 
         return ApiResponse.ok(null);
     }
+
+    @DeleteMapping("/{clubId}")
+    public ApiResponse<Void> deleteClub(
+            @PathVariable Long clubId) {
+        clubService.deleteClub(clubId);
+
+        return ApiResponse.ok(null);
+    }
 }

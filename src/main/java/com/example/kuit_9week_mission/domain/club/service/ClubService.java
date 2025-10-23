@@ -74,4 +74,12 @@ public class ClubService {
     }
 
     // TODO 3: 동아리 삭제 기능 구현(토큰 불필요) - DELETE
+    @Transactional
+    public void deleteClub(Long clubId) {
+        // 존재 검증
+        clubRepository.findById(clubId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND, new IllegalArgumentException("해당 동아리가 존재하지 않습니다.")));
+
+        clubRepository.delete(clubId);
+    }
 }
