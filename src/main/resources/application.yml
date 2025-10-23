@@ -19,3 +19,5 @@ jwt:
 logging:
   level:
     com.example.kuit: INFO
+    org.springframework.jdbc.core.JdbcTemplate: DEBUG  # JDBC SQL 로그
+    org.springframework.jdbc.core.StatementCreatorUtils: TRACE  # 바인딩 파라미터 값
