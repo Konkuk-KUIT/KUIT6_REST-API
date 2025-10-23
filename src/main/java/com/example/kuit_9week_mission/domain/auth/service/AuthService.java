@@ -19,7 +19,7 @@ public class AuthService {
 
     public LoginResponse login(LoginRequest request) {
         Student student = studentRepository.findByStudentNumber(request.studentNumber())
-                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND, new IllegalArgumentException("존재하지 않는 학생입니다.")));
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND, new IllegalArgumentException("해당 학생이 존재하지 않습니다.")));
 
         Long studentId = student.studentId();
 
