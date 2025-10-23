@@ -24,4 +24,8 @@ public record ApiResponse<T>(
         return new ApiResponse<>(false, errorCode.getStatusCode(), errorCode.getMessage(), null, LocalDateTime.now());
     }
 
+    public static <T> ApiResponse<T> fail(ErrorCode errorCode, String message) {
+        return new ApiResponse<>(false, errorCode.getStatusCode(), message, null, LocalDateTime.now());
+    }
+
 }

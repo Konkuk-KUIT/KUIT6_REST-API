@@ -16,28 +16,37 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    private String resolveMessage(String customMessage, String defaultMessage) {
+        return (customMessage != null && !customMessage.isBlank())
+                ? customMessage
+                : defaultMessage;
+    }
+
     // 커스텀 예외
     @ExceptionHandler(CustomException.class)
     public ApiResponse<Void> handleCustomException(CustomException e) {
         ErrorCode errorCode = e.getErrorCode();
+        String customMessage = resolveMessage(e.getMessage(), errorCode.getMessage());
 
-        log.error("[CustomException] {} - {}", errorCode.getStatusCode(), errorCode.getMessage(), e);
+        log.error("[CustomException] {} - {}", errorCode.getStatusCode(), customMessage, e);
 
-        return ApiResponse.fail(errorCode);
+        return ApiResponse.fail(errorCode, customMessage);
     }
 
     // Bean Validation 실패 (@Valid @RequestBody)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ApiResponse<Void> handleMethodArgumentNotValid(MethodArgumentNotValidException e) {
-        String msg = e.getBindingResult()
+        String detailMessage = e.getBindingResult()
                 .getFieldErrors()
                 .stream()
                 .map(err -> err.getField() + ": " + err.getDefaultMessage())
                 .collect(Collectors.joining(", "));
 
-        log.error("[Validation] {}", msg, e);
+        String customMessage = resolveMessage(detailMessage, ErrorCode.BAD_REQUEST.getMessage());
 
-        return ApiResponse.fail(ErrorCode.BAD_REQUEST);
+        log.error("[Validation] {}", customMessage, e);
+
+        return ApiResponse.fail(ErrorCode.BAD_REQUEST, customMessage);
     }
 
     // HTTP 메서드 불일치 (405)
@@ -60,8 +69,10 @@ public class GlobalExceptionHandler {
     // 기타 모든 예외
     @ExceptionHandler(Exception.class)
     public ApiResponse<Void> handleException(Exception e) {
-        log.error("[Unhandled Exception]", e);
+        String customMessage = resolveMessage(e.getMessage(), ErrorCode.INTERNAL_ERROR.getMessage());
 
-        return ApiResponse.fail(ErrorCode.INTERNAL_ERROR);
+        log.error("[Unhandled Exception] {}", customMessage, e);
+
+        return ApiResponse.fail(ErrorCode.INTERNAL_ERROR, customMessage);
     }
 }
