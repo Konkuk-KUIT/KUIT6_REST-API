@@ -47,4 +47,8 @@ public class ClubRepository {
                 name, description, clubId);
     }
 
+    public void delete(Long clubId) {
+        jdbc.update("DELETE FROM Clubs WHERE club_id = ?", clubId);
+    }
+
 }
