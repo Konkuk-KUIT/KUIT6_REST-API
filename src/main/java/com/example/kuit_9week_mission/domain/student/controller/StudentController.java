@@ -28,10 +28,12 @@ public class StudentController {
     @PatchMapping("/me")
     public ApiResponse<Void> updateMyInfo(
             @Valid @RequestBody UpdateStudentNameRequest request,
-            @StudentId Long studentId) {
+            @StudentId Long studentId
+    ) {
         studentService.updateStudentInfo(studentId, request);
 
         return ApiResponse.ok(null);
     }
+
 
 }

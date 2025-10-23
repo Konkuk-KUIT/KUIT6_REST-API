@@ -6,6 +6,7 @@ import com.example.kuit_9week_mission.domain.club.dto.response.ClubResponse;
 import com.example.kuit_9week_mission.domain.club.dto.response.CursorResponse;
 import com.example.kuit_9week_mission.domain.club.service.ClubMemberService;
 import com.example.kuit_9week_mission.domain.club.service.ClubService;
+import com.example.kuit_9week_mission.global.common.auth.StudentId;
 import com.example.kuit_9week_mission.global.common.response.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,8 @@ public class ClubController {
     @PutMapping("/{clubId}")
     public ApiResponse<Void> updateClub(
             @PathVariable Long clubId,
-            @Valid @RequestBody UpdateClubRequest request) {
+            @Valid @RequestBody UpdateClubRequest request
+    ) {
         clubService.updateClub(clubId, request);
 
         return ApiResponse.ok(null);
@@ -35,8 +37,19 @@ public class ClubController {
 
     @DeleteMapping("/{clubId}")
     public ApiResponse<Void> deleteClub(
-            @PathVariable Long clubId) {
+            @PathVariable Long clubId
+    ) {
         clubService.deleteClub(clubId);
+
+        return ApiResponse.ok(null);
+    }
+
+    @PostMapping("/{clubId}/members")
+    public ApiResponse<Void> joinClub(
+            @PathVariable Long clubId,
+            @StudentId Long studentId
+    ) {
+        clubMemberService.joinClub(studentId, clubId);
 
         return ApiResponse.ok(null);
     }
