@@ -1,12 +1,20 @@
 package com.example.kuit_9week_mission.domain.club.service;
 
+import com.example.kuit_9week_mission.domain.club.dto.request.CursorRequest;
+import com.example.kuit_9week_mission.domain.club.dto.response.ClubResponse;
+import com.example.kuit_9week_mission.domain.club.dto.response.CursorResponse;
+import com.example.kuit_9week_mission.domain.club.model.Club;
 import com.example.kuit_9week_mission.domain.club.repository.ClubRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ClubService {
+
+    private static final int PAGE_SIZE = 5;
 
     private final ClubRepository clubRepository;
 
@@ -31,6 +39,25 @@ public class ClubService {
      *   "timestamp": "2025-10-24T00:37:07.469931"
      * }
      */
+    public CursorResponse<ClubResponse> getClubs(CursorRequest request) {
+        long cursor = request.cursor();
+
+        List<Club> clubs = clubRepository.findClubs(cursor, PAGE_SIZE);
+
+        boolean hasNext = clubs.size() > PAGE_SIZE;
+
+        if(hasNext) {
+            clubs = clubs.subList(0, PAGE_SIZE);
+        }
+
+        long lastId = clubs.isEmpty() ? cursor : clubs.get(clubs.size() - 1).clubId();
+
+        List<ClubResponse> data = clubs.stream()
+                .map(ClubResponse::from)
+                .toList();
+
+        return new CursorResponse<>(data, lastId, hasNext);
+    }
 
     // TODO 2: 동아리 정보 수정 기능 구현(토큰 불필요) - PUT
 
