@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,5 +22,16 @@ public class ClubRepository {
             rs.getString("description"),
             ClubStatus.valueOf(rs.getString("status"))
     );
+
+    public List<Club> findClubs(long lastId, int size) {
+        String sql = """
+            SELECT club_id, name, description
+              FROM Clubs
+             WHERE club_id < ?
+             ORDER BY club_id DESC
+             LIMIT ?
+            """;
+        return jdbc.query(sql, MAPPER, lastId, size + 1);
+    }
 
 }
