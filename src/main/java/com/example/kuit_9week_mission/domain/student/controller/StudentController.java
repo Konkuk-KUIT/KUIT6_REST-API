@@ -19,15 +19,16 @@ public class StudentController {
     private final StudentService studentService;
     private final ClubMemberService clubMemberService;
 
-    // 학생 본인 정보 조회
+    // 학생 본인 정보 조회 기능
     // [ @StudentId Long 변수명 ] <- 이 형태로 코드를 작성해두기만 하면, 자동으로 토큰으로부터 studentId 를 추출하여 변수에 값을 주입해준다.
     @GetMapping("/me")
     public ApiResponse<StudentInfoResponse> me(@StudentId Long studentId) {
         return ApiResponse.ok(studentService.getStudentInfo(studentId));
     }
 
+    // 현재 로그인한 학생 이름 수정 기능
     @PatchMapping("/me")
-    public ApiResponse<Void> updateMyInfo(
+    public ApiResponse<Void> updateName(
             @Valid @RequestBody UpdateStudentNameRequest request,
             @StudentId Long studentId
     ) {
@@ -36,6 +37,7 @@ public class StudentController {
         return ApiResponse.ok(null);
     }
 
+    // 현재 로그인한 학생이 속해있는 동아리 목록 조회 기능
     @GetMapping("/me/clubs")
     public ApiResponse<MyClubsResponse> getMyClubs(@StudentId Long studentId) {
         return ApiResponse.ok(clubMemberService.getMyClubs(studentId));
