@@ -20,10 +20,17 @@ public class ClubMemberService {
     /*
      * 응답 DTO 구조는 반드시 아래 형태를 따를 것
      * {
-     *   "studentName": "멤버1",
-     *   "clubNames": ["Club 3", "Club 7", "Club 10"]
+     *   "isSuccess": true,
+     *   "statusCode": 20000,
+     *   "message": "요청에 성공했습니다",
+     *   "data": {
+     *       "studentName": "멤버1",
+     *       "clubNames": ["동아리 3", "동아리 7", "동아리 10"]
+     *   },
+     *   "timestamp": "2025-10-24T00:37:07.469931"
      * }
      */
+
 
 
 }

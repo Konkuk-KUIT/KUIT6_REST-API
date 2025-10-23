@@ -14,9 +14,21 @@ public class ClubService {
     /**
      * 응답 DTO 구조는 아래와 같은 형태를 따를 것
      * {
-     *     data: [],
-     *     lastId: 100,
-     *     hasNext: true
+     *   "isSuccess": true,
+     *   "statusCode": 20000,
+     *   "message": "요청에 성공했습니다",
+     *   "data": {
+     *       "data": [
+     *           {
+     *               "clubId": 4,
+     *               "name": "동아리 4",
+     *               "description": "동아리 4 설명"
+     *           }
+     *       ],
+     *       "lastId": 100,
+     *       "hasNext": true
+     *   },
+     *   "timestamp": "2025-10-24T00:37:07.469931"
      * }
      */
 
