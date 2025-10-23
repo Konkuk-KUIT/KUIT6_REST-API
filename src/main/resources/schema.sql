@@ -23,7 +23,7 @@ CREATE TABLE Club_Members
     join_date     DATE,
     student_id    BIGINT NOT NULL,
     club_id       BIGINT NOT NULL,
-    CONSTRAINT fk_cm_student FOREIGN KEY (student_id) REFERENCES Students (student_id),
-    CONSTRAINT fk_cm_club FOREIGN KEY (club_id) REFERENCES Clubs (club_id),
+    CONSTRAINT fk_cm_student FOREIGN KEY (student_id) REFERENCES Students (student_id) ON DELETE CASCADE,
+    CONSTRAINT fk_cm_club FOREIGN KEY (club_id) REFERENCES Clubs (club_id) ON DELETE CASCADE,
     CONSTRAINT ux_club_members UNIQUE (student_id, club_id)
 );
