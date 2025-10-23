@@ -7,6 +7,8 @@
 ## 📊 데이터베이스 스키마
 
 ### 테이블 구조
+<img width="810" height="424" alt="스크린샷 2025-10-24 오전 1 17 42" src="https://github.com/user-attachments/assets/544edcbb-310b-4ef0-b813-40b5457cc932" />
+
 1. **Students** (학생 정보)
    - `student_id`: 학생 ID (Primary Key, Auto Increment)
    - `student_number`: 학번 (Unique)
