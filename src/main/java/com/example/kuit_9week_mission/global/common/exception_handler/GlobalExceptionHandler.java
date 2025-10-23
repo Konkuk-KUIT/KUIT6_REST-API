@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CustomException.class)
     public ApiResponse<Void> handleCustomException(CustomException e) {
         ErrorCode errorCode = e.getErrorCode();
-        String customMessage = resolveMessage(e.getMessage(), errorCode.getMessage());
+        String customMessage = resolveMessage(e.getCause().getMessage(), errorCode.getMessage());
 
         log.error("[CustomException] {} - {}", errorCode.getStatusCode(), customMessage, e);
 
