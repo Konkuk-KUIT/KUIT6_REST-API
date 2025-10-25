@@ -26,15 +26,15 @@ public class ClubMemberService {
     public void joinClub(Long studentId, Long clubId) {
         // 학생 존재 검증
         studentRepository.findById(studentId)
-                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND, new IllegalArgumentException("해당 학생이 존재하지 않습니다.")));
+                .orElseThrow(() -> new CustomException(ErrorCode.STUDENT_NOT_FOUND));
 
         // 동아리 존재 검증
         clubRepository.findById(clubId)
-                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND, new IllegalArgumentException("해당 동아리가 존재하지 않습니다.")));
+                .orElseThrow(() -> new CustomException(ErrorCode.CLUB_NOT_FOUND));
 
         // 이미 가입되어있으면 에러 발생
         if (clubMemberRepository.existsByStudentIdAndClubId(studentId, clubId)) {
-            throw new CustomException(ErrorCode.CONFLICT, new IllegalArgumentException("이미 가입된 동아리입니다."));
+            throw new CustomException(ErrorCode.ALREADY_JOINED_CLUB);
         }
 
         clubMemberRepository.save(studentId, clubId, LocalDate.now());
@@ -57,7 +57,7 @@ public class ClubMemberService {
     public MyClubsResponse getMyClubs(Long studentId) {
         // 학생 조회 및 검증
         String studentName = studentRepository.findById(studentId)
-                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND, new IllegalArgumentException("해당 학생이 존재하지 않습니다.")))
+                .orElseThrow(() -> new CustomException(ErrorCode.STUDENT_NOT_FOUND))
                 .name();
 
         // Club_Members 와 JOIN 하여 동아리 이름 목록 조회

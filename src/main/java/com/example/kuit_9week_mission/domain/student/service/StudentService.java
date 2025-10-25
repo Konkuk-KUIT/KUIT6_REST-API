@@ -19,7 +19,7 @@ public class StudentService {
     // 학생 본인 정보 조회 기능
     public StudentInfoResponse getStudentInfo(Long studentId) {
         Student student = studentRepository.findById(studentId)
-                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND, new IllegalArgumentException("해당 학생이 존재하지 않습니다.")));
+                .orElseThrow(() -> new CustomException(ErrorCode.STUDENT_NOT_FOUND));
 
         return StudentInfoResponse.from(student);
     }
@@ -28,7 +28,7 @@ public class StudentService {
     @Transactional
     public void updateStudentInfo(Long studentId, UpdateStudentNameRequest request) {
         Student student = studentRepository.findById(studentId)
-                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND, new IllegalArgumentException("해당 학생이 존재하지 않습니다.")));
+                .orElseThrow(() -> new CustomException(ErrorCode.STUDENT_NOT_FOUND));
 
         studentRepository.update(studentId, student.studentNumber(), request.name());
     }
