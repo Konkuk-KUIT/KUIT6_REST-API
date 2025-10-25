@@ -32,9 +32,9 @@ public class ClubMemberService {
         clubRepository.findById(clubId)
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND, new IllegalArgumentException("해당 동아리가 존재하지 않습니다.")));
 
-        // 이미 가입되어있으면 아무런 동작도 하지 않고 리턴
+        // 이미 가입되어있으면 에러 발생
         if (clubMemberRepository.existsByStudentIdAndClubId(studentId, clubId)) {
-            return;
+            throw new CustomException(ErrorCode.CONFLICT, new IllegalArgumentException("이미 가입된 동아리입니다."));
         }
 
         clubMemberRepository.save(studentId, clubId, LocalDate.now());
