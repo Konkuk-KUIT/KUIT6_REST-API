@@ -68,7 +68,7 @@ public class ClubService {
     public void updateClub(Long clubId, UpdateClubRequest request) {
         // 존재 검증
         clubRepository.findById(clubId)
-                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND, new IllegalArgumentException("해당 동아리가 존재하지 않습니다.")));
+                .orElseThrow(() -> new CustomException(ErrorCode.CLUB_NOT_FOUND));
 
         clubRepository.update(clubId, request.name(), request.description());
     }
@@ -78,7 +78,7 @@ public class ClubService {
     public void deleteClub(Long clubId) {
         // 존재 검증
         clubRepository.findById(clubId)
-                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND, new IllegalArgumentException("해당 동아리가 존재하지 않습니다.")));
+                .orElseThrow(() -> new CustomException(ErrorCode.CLUB_NOT_FOUND));
 
         clubRepository.delete(clubId);
     }
