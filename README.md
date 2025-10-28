@@ -18,6 +18,7 @@
    - `club_id`: 동아리 ID (Primary Key, Auto Increment)
    - `name`: 동아리 이름 (Unique)
    - `description`: 동아리 설명
+   - `status`: 동아리 상태
 
 3. **Club_Members** (동아리 가입 정보)
    - `club_member_id`: 가입 ID (Primary Key, Auto Increment)
@@ -84,9 +85,11 @@ src/main/java/com/example/kuit_9week_mission/
 
 다음 기능들을 직접 구현하셔야 합니다.
 
-### ☑️ TODO 1: 전체 동아리 목록 조회 (무한 스크롤)
+### ☑️ TODO 1: 동아리 목록 조회 (무한 스크롤 & status 기반 필터링)
 - **토큰**: 불필요
-- **기능**: 페이지당 5개씩 동아리 목록 조회 (무한 스크롤) - clubId 기준 내림차순 조회
+- **기능**: 동아리 목록 조회 (무한 스크롤) 
+  - 페이지당 5개씩 - clubId 기준 내림차순 조회
+  - 쿼리 파라미터 status 를 전달 받아 해당 상태(ACTIVE/INACTIVE)의 동아리만 조회
 - **응답 형식**
   ```json
   {
@@ -108,11 +111,11 @@ src/main/java/com/example/kuit_9week_mission/
   }
   ```
 
-### ☑️ TODO 2: 동아리 정보 수정
+### ☑️ TODO 2: 동아리 정보 수정 (status 고려할 필요 X)
 - **토큰**: 불필요
 - **기능**: 동아리 이름과 설명 수정
 
-### ☑️ TODO 3: 동아리 삭제
+### ☑️ TODO 3: 동아리 삭제 (status 고려할 필요 X)
 - **토큰**: 불필요
 - **기능**: 동아리 삭제
 
@@ -122,7 +125,7 @@ src/main/java/com/example/kuit_9week_mission/
 
 ### ☑️ TODO 5: 동아리 가입
 - **토큰**: 필요 
-- **기능**: 현재 로그인한 학생이 동아리에 가입 - 이미 가입된 동아리에 중복 가입 금지
+- **기능**: 현재 로그인한 학생이 동아리에 가입 - 이미 가입된 동아리에 중복 가입 금지 & status = 'ACTIVE' 인 동아리만 가입 가능하도록 제한
 
 ### ☑️ TODO 6: 내가 가입한 동아리 목록 조회
 - **토큰**: 필요 
@@ -163,7 +166,6 @@ src/main/java/com/example/kuit_9week_mission/
 - JDBC 를 사용한 데이터베이스 연동
 - 무한 스크롤 구현
 - SQL JOIN 쿼리 작성
-- Spring Boot Validation 활용
 - 전역 예외 처리
 
 ## 🎯 평가 기준

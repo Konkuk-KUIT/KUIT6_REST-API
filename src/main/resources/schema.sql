@@ -14,7 +14,8 @@ CREATE TABLE Clubs
 (
     club_id     BIGINT PRIMARY KEY AUTO_INCREMENT,
     name        VARCHAR(50) NOT NULL UNIQUE,
-    description VARCHAR(200)
+    description VARCHAR(200),
+    status      ENUM('ACTIVE','INACTIVE') NOT NULL DEFAULT 'ACTIVE'
 );
 
 CREATE TABLE Club_Members
