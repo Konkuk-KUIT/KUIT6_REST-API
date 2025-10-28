@@ -24,7 +24,7 @@ public class StudentService {
         return StudentInfoResponse.from(student);
     }
 
-    // TODO 4: 현재 로그인한 학생 이름 수정하기(토큰 필요) - PATCH
+    // 현재 로그인한 학생 이름 수정 기능
     @Transactional
     public void updateStudentInfo(Long studentId, UpdateStudentNameRequest request) {
         Student student = studentRepository.findById(studentId)

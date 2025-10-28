@@ -21,13 +21,14 @@ public class ClubMemberService {
     private final ClubRepository clubRepository;
     private final ClubMemberRepository clubMemberRepository;
 
-    // TODO 5: 현재 로그인한 학생의 동아리 가입 기능 구현(토큰 필요) - POST
+    // 현재 로그인한 학생의 동아리 가입 기능
     @Transactional
     public void joinClub(Long studentId, Long clubId) {
         // 학생 존재 검증
         studentRepository.findById(studentId)
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND, new IllegalArgumentException("해당 학생이 존재하지 않습니다.")));
 
+        // 동아리 존재 검증
         clubRepository.findById(clubId)
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND, new IllegalArgumentException("해당 동아리가 존재하지 않습니다.")));
 
@@ -39,7 +40,7 @@ public class ClubMemberService {
         clubMemberRepository.save(studentId, clubId, LocalDate.now());
     }
 
-    // TODO 6: 현재 로그인한 학생이 속해있는 동아리 목록 조회(토큰 필요) - (학생의 이름 & 동아리 이름 모두 반환 => JOIN 잘 활용하기) - GET
+    // 현재 로그인한 학생이 속해있는 동아리 목록 조회 기능
     /*
      * 응답 DTO 구조는 반드시 아래 형태를 따를 것
      * {

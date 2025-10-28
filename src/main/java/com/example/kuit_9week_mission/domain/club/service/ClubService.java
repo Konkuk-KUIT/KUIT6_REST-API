@@ -63,7 +63,7 @@ public class ClubService {
         return new CursorResponse<>(data, lastId, hasNext);
     }
 
-    // TODO 2: 동아리 정보 수정 기능 구현(토큰 불필요) - PUT
+    // 동아리 정보 수정 기능
     @Transactional
     public void updateClub(Long clubId, UpdateClubRequest request) {
         // 존재 검증
@@ -73,7 +73,7 @@ public class ClubService {
         clubRepository.update(clubId, request.name(), request.description());
     }
 
-    // TODO 3: 동아리 삭제 기능 구현(토큰 불필요) - DELETE
+    // 동아리 삭제 기능
     @Transactional
     public void deleteClub(Long clubId) {
         // 존재 검증

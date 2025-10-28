@@ -73,10 +73,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ApiResponse<Void> handleHttpMessageNotReadable(HttpMessageNotReadableException e) {
         log.error("[HttpMessageNotReadable] {}", e.getMessage(), e);
+
         return ApiResponse.fail(ErrorCode.BAD_REQUEST);
     }
-
-    // TODO: 더 세분화하고싶은 예외는 직접 추가
 
     // 기타 모든 예외
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

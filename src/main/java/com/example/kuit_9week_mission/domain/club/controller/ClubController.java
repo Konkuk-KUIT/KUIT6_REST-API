@@ -20,11 +20,13 @@ public class ClubController {
     private final ClubService clubService;
     private final ClubMemberService clubMemberService;
 
+    // 전체 동아리 목록 조회 기능
     @GetMapping
     public ApiResponse<CursorResponse<ClubResponse>> getClubs(@Valid CursorRequest request) {
         return ApiResponse.ok(clubService.getClubs(request));
     }
 
+    // 동아리 정보 수정 기능
     @PutMapping("/{clubId}")
     public ApiResponse<Void> updateClub(
             @PathVariable Long clubId,
@@ -35,6 +37,7 @@ public class ClubController {
         return ApiResponse.ok(null);
     }
 
+    // 동아리 삭제 기능
     @DeleteMapping("/{clubId}")
     public ApiResponse<Void> deleteClub(
             @PathVariable Long clubId
@@ -44,6 +47,7 @@ public class ClubController {
         return ApiResponse.ok(null);
     }
 
+    // 현재 로그인한 학생의 동아리 가입 기능
     @PostMapping("/{clubId}/members")
     public ApiResponse<Void> joinClub(
             @PathVariable Long clubId,
