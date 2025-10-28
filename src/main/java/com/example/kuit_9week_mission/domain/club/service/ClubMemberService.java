@@ -1,6 +1,8 @@
 package com.example.kuit_9week_mission.domain.club.service;
 
 import com.example.kuit_9week_mission.domain.club.dto.response.MyClubsResponse;
+import com.example.kuit_9week_mission.domain.club.model.Club;
+import com.example.kuit_9week_mission.domain.club.model.ClubStatus;
 import com.example.kuit_9week_mission.domain.club.repository.ClubMemberRepository;
 import com.example.kuit_9week_mission.domain.club.repository.ClubRepository;
 import com.example.kuit_9week_mission.domain.student.repository.StudentRepository;
@@ -29,8 +31,13 @@ public class ClubMemberService {
                 .orElseThrow(() -> new CustomException(ErrorCode.STUDENT_NOT_FOUND));
 
         // 동아리 존재 검증
-        clubRepository.findById(clubId)
+        Club club = clubRepository.findById(clubId)
                 .orElseThrow(() -> new CustomException(ErrorCode.CLUB_NOT_FOUND));
+
+        // 동아리 상태 검증
+        if(club.status() == ClubStatus.INACTIVE) {
+            throw new CustomException(ErrorCode.CLUB_INACTIVE);
+        }
 
         // 이미 가입되어있으면 에러 발생
         if (clubMemberRepository.existsByStudentIdAndClubId(studentId, clubId)) {

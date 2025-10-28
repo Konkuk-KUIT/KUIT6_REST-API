@@ -1,9 +1,9 @@
 package com.example.kuit_9week_mission.domain.club.service;
 
-import com.example.kuit_9week_mission.domain.club.dto.request.CursorRequest;
+import com.example.kuit_9week_mission.domain.club.dto.request.ClubCursorRequest;
 import com.example.kuit_9week_mission.domain.club.dto.request.UpdateClubRequest;
 import com.example.kuit_9week_mission.domain.club.dto.response.ClubResponse;
-import com.example.kuit_9week_mission.domain.club.dto.response.CursorResponse;
+import com.example.kuit_9week_mission.domain.club.dto.response.ClubCursorResponse;
 import com.example.kuit_9week_mission.domain.club.model.Club;
 import com.example.kuit_9week_mission.domain.club.repository.ClubRepository;
 import com.example.kuit_9week_mission.global.common.exception.CustomException;
@@ -22,7 +22,7 @@ public class ClubService {
 
     private final ClubRepository clubRepository;
 
-    // TODO 1: 동아리 목록 조회 기능 구현(토큰 불필요) - GET (무한 스크롤 - 각 페이지당 5개의 데이터를 보여줄 것 & status 기반 필터링)
+    // 동아리 목록 조회 기능 구현(토큰 불필요) - GET (무한 스크롤 - 각 페이지당 5개의 데이터를 보여줄 것 & status 기반 필터링)
     /**
      * 응답 DTO 구조는 아래와 같은 형태를 따를 것
      * {
@@ -43,10 +43,10 @@ public class ClubService {
      *   "timestamp": "2025-10-24T00:37:07.469931"
      * }
      */
-    public CursorResponse<ClubResponse> getClubs(CursorRequest request) {
+    public ClubCursorResponse<ClubResponse> getClubs(ClubCursorRequest request) {
         long cursor = request.cursor();
 
-        List<Club> clubs = clubRepository.findClubs(cursor, PAGE_SIZE);
+        List<Club> clubs = clubRepository.findClubs(cursor, PAGE_SIZE, request.status());
 
         boolean hasNext = clubs.size() > PAGE_SIZE;
 
@@ -60,7 +60,7 @@ public class ClubService {
                 .map(ClubResponse::from)
                 .toList();
 
-        return new CursorResponse<>(data, lastId, hasNext);
+        return new ClubCursorResponse<>(data, lastId, hasNext);
     }
 
     // 동아리 정보 수정 기능

@@ -1,9 +1,9 @@
 package com.example.kuit_9week_mission.domain.club.controller;
 
-import com.example.kuit_9week_mission.domain.club.dto.request.CursorRequest;
+import com.example.kuit_9week_mission.domain.club.dto.request.ClubCursorRequest;
 import com.example.kuit_9week_mission.domain.club.dto.request.UpdateClubRequest;
 import com.example.kuit_9week_mission.domain.club.dto.response.ClubResponse;
-import com.example.kuit_9week_mission.domain.club.dto.response.CursorResponse;
+import com.example.kuit_9week_mission.domain.club.dto.response.ClubCursorResponse;
 import com.example.kuit_9week_mission.domain.club.service.ClubMemberService;
 import com.example.kuit_9week_mission.domain.club.service.ClubService;
 import com.example.kuit_9week_mission.global.common.auth.StudentId;
@@ -20,9 +20,9 @@ public class ClubController {
     private final ClubService clubService;
     private final ClubMemberService clubMemberService;
 
-    // 전체 동아리 목록 조회 기능
+    // 동아리 목록 조회 기능
     @GetMapping
-    public ApiResponse<CursorResponse<ClubResponse>> getClubs(@Valid CursorRequest request) {
+    public ApiResponse<ClubCursorResponse<ClubResponse>> getClubs(@Valid ClubCursorRequest request) {
         return ApiResponse.ok(clubService.getClubs(request));
     }
 

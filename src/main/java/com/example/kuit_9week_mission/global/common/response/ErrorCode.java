@@ -19,8 +19,10 @@ public enum ErrorCode {
     STUDENT_NOT_FOUND(HttpStatus.NOT_FOUND, 40401, "해당 학생이 존재하지 않습니다."),
 
     // Club 도메인
+    CLUB_INACTIVE(HttpStatus.BAD_REQUEST, 40001, "해당 동아리는 현재 비활성화 상태로 가입이 불가합니다."),
     CLUB_NOT_FOUND(HttpStatus.NOT_FOUND, 40402, "해당 동아리가 존재하지 않습니다."),
     ALREADY_JOINED_CLUB(HttpStatus.CONFLICT, 40901, "이미 가입된 동아리입니다.");
+
 
     private final HttpStatus httpStatus;
     private final int code;

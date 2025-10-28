@@ -24,20 +24,21 @@ public class ClubRepository {
             ClubStatus.valueOf(rs.getString("status"))
     );
 
-    public List<Club> findClubs(long lastId, int size) {
+    public List<Club> findClubs(long lastId, int size, ClubStatus status) {
         String sql = """
-            SELECT club_id, name, description
+            SELECT club_id, name, description, status
               FROM Clubs
              WHERE club_id < ?
+             AND status = ?
              ORDER BY club_id DESC
              LIMIT ?
             """;
 
-        return jdbc.query(sql, MAPPER, lastId, size + 1);
+        return jdbc.query(sql, MAPPER, lastId, status.name(), size + 1);
     }
 
     public Optional<Club> findById(Long clubId) {
-        String sql = "SELECT club_id, name, description FROM Clubs WHERE club_id = ?";
+        String sql = "SELECT club_id, name, description, status FROM Clubs WHERE club_id = ?";
 
         return jdbc.query(sql, MAPPER, clubId).stream().findFirst();
     }
